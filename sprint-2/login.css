@@ -1,0 +1,21 @@
+#user{
+    margin-left: 23px;
+    margin-top: 20px;
+}
+
+#login{
+    border: solid black 3px;
+    text-align: center;
+    margin-top: 300px;
+    width: 66%;
+    margin-left: 215px;
+        
+}
+
+#login-btn{
+    margin-bottom: 20px;
+}
+
+#errArea{
+    color: red;
+}
