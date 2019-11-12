@@ -113,3 +113,29 @@ input {
     width: 100%;
     margin-top: 20px;
 }
+
+#clickMe {
+    margin: 10px;
+    width: 100%;
+}
+
+button {
+    width: 40%;
+    height: 40px;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: lightblue;
+    cursor: grab;
+}
+
+.card {
+    border: 5px solid black;
+    border-radius: 3px;
+    box-shadow: 0px 2px 2px 0px black;
+    float: left;
+    width: 30%;
+    background-color: lightblue;
+    margin: 5px;
+}
