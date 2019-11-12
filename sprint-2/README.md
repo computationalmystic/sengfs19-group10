@@ -11,3 +11,5 @@ This application is intented to allow an authorized user to view locational data
 
 ## Public URL
 https://www.josephcvitale.com/swe/login.html
+Usename = 'User'
+Password = 'Pass'
