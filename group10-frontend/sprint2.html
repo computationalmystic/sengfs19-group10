@@ -17,11 +17,20 @@
                 disableDefaultUI: true,
                 draggable: false
             });
-            placePin(40, -95, map);
-            placePin(35, -90, map);
-            placePin(45, -100,map);
-            placePin(35, -95, map);
-        }   
+        
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+    			var locationArray = JSON.parse(this.responseText);
+			locationArray.forEach(function(contributor) {
+				placePin(contributor.cntrb_lat, contributor.cntrb_long, map);
+			});
+  		}
+	};
+	xmlhttp.open("GET", "http://129.114.104.67:5000/api/unstable/repo-groups/20/committers-locations", true);
+	xmlhttp.send();
+
+	}   
     </script> 
 </head>
 
