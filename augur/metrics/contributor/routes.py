@@ -335,14 +335,13 @@ def create_contributor_routes(server):
                         }
                     ]
     """
-    server.addRepoMetric(metrics.top_committers, 'top-committers')
+    server.addRepoMetric(metrics.top_committers, 'top-committers') 
     
-    
-        """
-    @api {get} /repo-groups/:repo_group_id/contributors_locations Contributors Locations (Repo Group)
-    @apiName Contributors-Locations(Repo Group)
+    """
+    @api {get} /repo-groups/:repo_group_id/committers_locations Committers Locations (Repo Group)
+    @apiName Committers-Locations(Repo Group)
     @apiGroup Evolution
-    @apiDescription List of contributors and their locations.
+    @apiDescription List of committers and their locations.
                     <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
     @apiParam {string} repo_group_id Repository Group ID
     @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
@@ -362,13 +361,14 @@ def create_contributor_routes(server):
                     ]
     """
     server.addRepoGroupMetric(
-        metrics.contributors_locations, 'contributors-locations')
+        metrics.committers_locations, 'committers-locations')
 
+    
     """
-    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/contributors_locations Contributors Locations (Repo)
-    @apiName Contributors(Repo)
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/committers_locations Committers Locations (Repo)
+    @apiName Committers-Locations(Repo)
     @apiGroup Evolution
-    @apiDescription List of contributors and their locations.
+    @apiDescription List of committers and their locations.
                     <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
     @apiParam {string} repo_group_id Repository Group ID.
     @apiParam {string} repo_id Repository ID.
@@ -389,7 +389,7 @@ def create_contributor_routes(server):
                     ]
     """
     server.addRepoMetric(
-        metrics.contributors_locations, 'contributors-locations')
+        metrics.committers_locations, 'committers-locations')
 
     server.addRepoGroupMetric(metrics.contributors_code_development, 'contributors-code-development')
 
