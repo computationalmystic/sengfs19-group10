@@ -211,6 +211,155 @@ def contributors(self, repo_group_id, repo_id=None, period='day', begin_date=Non
                                                                 'begin_date': begin_date, 'end_date': end_date})
     return results
 
+@annotate(tag='contributors-locations')
+def contributors_locations(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
+    """
+    Returns a timeseries of the locations of all the contributions to a project.
+
+    DataFrame has these columns:
+    date
+    email
+
+    :param repo_id: The repository's id
+    :param repo_group_id: The repository's group id
+    :param period: To set the periodicity to 'day', 'week', 'month' or 'year', defaults to 'day'
+    :param begin_date: Specifies the begin date, defaults to '1970-1-1 00:00:00'
+    :param end_date: Specifies the end date, defaults to datetime.now()
+    :return: DataFrame of persons/period
+    """
+
+    if not begin_date:
+        begin_date = '1970-1-1 00:00:01'
+    if not end_date:
+        end_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if repo_id:
+        contributorsSQL = s.sql.text("""
+           SELECT id                           AS user_id,
+                cntrb_email,
+                a.repo_id
+            FROM (
+                    contributors join (
+                        (
+                            SELECT gh_user_id AS id,
+                                repo_id
+                            FROM issues
+                            WHERE repo_id = :repo_id
+                                AND created_at BETWEEN :begin_date AND :end_date
+                                AND gh_user_id IS NOT NULL
+                                AND pull_request IS NULL
+                            GROUP BY gh_user_id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT cmt_ght_author_id AS id, repo_id
+                            FROM commits
+                            WHERE repo_id = :repo_id
+                                AND cmt_ght_author_id IS NOT NULL
+                                AND cmt_committer_date BETWEEN :begin_date AND :end_date
+                            GROUP BY cmt_ght_author_id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT cntrb_id AS id,
+                                    repo_id
+                            FROM commit_comment_ref,
+                                commits,
+                                message
+                            WHERE commit_comment_ref.cmt_id = commit_comment_ref.cmt_id
+                                AND message.msg_id = commit_comment_ref.msg_id
+                                AND repo_id = :repo_id
+                                AND created_at BETWEEN :begin_date AND :end_date
+                            GROUP BY id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT message.cntrb_id AS id,
+                                repo_id
+                            FROM issues,
+                                issue_message_ref,
+                                message
+                            WHERE repo_id = :repo_id
+                            AND gh_user_id IS NOT NULL
+                            AND issues.issue_id = issue_message_ref.issue_id
+                            AND issue_message_ref.msg_id = message.msg_id
+                            AND issues.pull_request IS NULL
+                            AND created_at BETWEEN :begin_date AND :end_date
+                            GROUP BY id, repo_id
+                        )
+                    ) ON contributors.gh_user_id = id
+                ) a, repo
+            WHERE a.repo_id = repo.repo_id
+        """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_id': repo_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+    
+    else:
+       contributorsSQL = s.sql.text("""
+           SELECT id                           AS user_id,
+                cntrb_email,
+                a.repo_id
+            FROM (
+                    contributors join (
+                        (
+                            SELECT gh_user_id AS id,
+                                repo_id
+                            FROM issues
+                             WHERE repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
+                                AND created_at BETWEEN :begin_date AND :end_date
+                                AND gh_user_id IS NOT NULL
+                                AND pull_request IS NULL
+                            GROUP BY gh_user_id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT cmt_ght_author_id AS id, repo_id
+                            FROM commits
+                            WHERE repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
+                                AND cmt_ght_author_id IS NOT NULL
+                                AND cmt_committer_date BETWEEN :begin_date AND :end_date
+                            GROUP BY cmt_ght_author_id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT cntrb_id AS id,
+                                    repo_id
+                            FROM commit_comment_ref,
+                                commits,
+                                message
+                            WHERE commit_comment_ref.cmt_id = commit_comment_ref.cmt_id
+                                AND message.msg_id = commit_comment_ref.msg_id
+                                AND repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
+                                AND created_at BETWEEN :begin_date AND :end_date
+                            GROUP BY id, repo_id
+                        )
+                        UNION ALL
+                        (
+                            SELECT message.cntrb_id AS id,
+                                repo_id
+                            FROM issues,
+                                issue_message_ref,
+                                message
+                             WHERE repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
+                            AND gh_user_id IS NOT NULL
+                            AND issues.issue_id = issue_message_ref.issue_id
+                            AND issue_message_ref.msg_id = message.msg_id
+                            AND issues.pull_request IS NULL
+                            AND created_at BETWEEN :begin_date AND :end_date
+                            GROUP BY id, repo_id
+                        )
+                    ) ON contributors.gh_user_id = id
+                ) a, repo
+            WHERE a.repo_id = repo.repo_id
+        """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+    
+
+    return results
+
 @annotate(tag='contributors-new')
 def contributors_new(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
     """
@@ -551,6 +700,52 @@ def contributors_code_development(self, repo_group_id, repo_id=None, period='all
             WHERE a.repo_id = repo.repo_id
             GROUP BY  a.email, a.repo_id, repo_name
             ORDER BY commits desc, email
+        """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+    return results
+
+@annotate(tag='contributors-location')
+def contributors_locations(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
+    """
+    Returns a timeseries of the emails of all the committers to a project.
+
+    DataFrame has these columns:
+    date
+    latitude
+    longitude
+
+    :param repo_id: The repository's id
+    :param repo_group_id: The repository's group id
+    :param period: To set the periodicity to 'day', 'week', 'month' or 'year', defaults to 'day'
+    :param begin_date: Specifies the begin date, defaults to '1970-1-1 00:00:00'
+    :param end_date: Specifies the end date, defaults to datetime.now()
+    :return: DataFrame of persons/period
+    """
+
+    if not begin_date:
+        begin_date = '1970-1-1 00:00:01'
+    if not end_date:
+        end_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if repo_id:
+        contributorsSQL = s.sql.text("""
+            select cntrb_lat, cntrb_long, repo_id
+            from contributors a join commits b
+            on a.cntrb_email = b.cmt_author_email
+            where repo_id = :repo_id
+            """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_id': repo_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+
+    else:
+        contributorsSQL = s.sql.text("""
+            select cntrb_lat, cntrb_long, repo_id
+            from contributors a join commits b
+            on a.cntrb_email = b.cmt_author_email
+            where repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
         """)
 
         results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,

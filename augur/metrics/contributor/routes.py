@@ -336,6 +336,60 @@ def create_contributor_routes(server):
                     ]
     """
     server.addRepoMetric(metrics.top_committers, 'top-committers')
+    
+    
+        """
+    @api {get} /repo-groups/:repo_group_id/contributors_locations Contributors Locations (Repo Group)
+    @apiName Contributors-Locations(Repo Group)
+    @apiGroup Evolution
+    @apiDescription List of contributors and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                    [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoGroupMetric(
+        metrics.contributors_locations, 'contributors-locations')
+
+    """
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/contributors_locations Contributors Locations (Repo)
+    @apiName Contributors(Repo)
+    @apiGroup Evolution
+    @apiDescription List of contributors and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID.
+    @apiParam {string} repo_id Repository ID.
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                     [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoMetric(
+        metrics.contributors_locations, 'contributors-locations')
 
     server.addRepoGroupMetric(metrics.contributors_code_development, 'contributors-code-development')
 
