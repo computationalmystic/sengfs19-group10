@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Interactive Map</title>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="pin.js"></script>
+    <script>
+        var map;
+        function initMap() {
+            console.log("We are inside the function.");
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 40, lng: -95},
+                zoom: 4.2,
+                disableDefaultUI: true,
+                draggable: false
+            });
+            placePin(40, -95, map);
+            placePin(35, -90, map);
+            placePin(45, -100,map);
+            placePin(35, -95, map);
+        }   
+    </script> 
+</head>
+
+<body>
+    <!--div across the top "Repos by Location"-->
+    <div id="title">
+        <h1>Repo Contributors by Location</h1>
+    </div>
+    
+    <!--div on the top "Contributors: "-->
+    <div id="contributors">
+        <p><span>Contributors:</span><br>John Birkin, Matt Pilgrim, Joseph Vitale, <br>Kaitlyn Zahn</p>
+    </div>
+    
+    <!--line across the screen for formatting-->
+    <hr>
+    
+    <!--div with scrollable list (form) that lists all of the states-->
+    <div id="menu">
+        <ul>
+            <li>Alabama</li>
+            <li>Alaska</li>
+            <li>Arizona</li>
+            <li>Arkansas</li>
+            <li>California</li>
+            <li>Colorado</li>
+            <li>Conneticut</li>
+            <li>Delaware</li>
+            <li>Florida</li>
+            <li>Georgia</li>
+            <li>Hawaii</li>
+            <li>Idaho</li>
+            <li>Illinois</li>
+            <li>Indiana</li>
+            <li>Iowa</li>
+            <li>Kansas</li>
+            <li>Kentucky</li>
+            <li>Louisiana</li>
+            <li>Maine</li>
+            <li>Maryland</li>
+            <li>Massachusetts</li>
+            <li>Michigan</li>
+            <li>Minnesota</li>
+            <li>Mississippi</li>
+            <li>Missouri</li>
+            <li>Montana</li>
+            <li>Nebraska</li>
+            <li>Nevada</li>
+            <li>New Hampshire</li>
+            <li>New Jersey</li>
+            <li>New Mexico</li>
+            <li>New York</li>
+            <li>North Carolina</li>
+            <li>North Dakota</li>
+            <li>Ohio</li>
+            <li>Oklahoma</li>
+            <li>Oregon</li>
+            <li>Pennsylvania</li>
+            <li>Rhode Island</li>
+            <li>South Carolina</li>
+            <li>South Dakota</li>
+            <li>Tennessee</li>
+            <li>Texas</li>
+            <li>Utah</li>
+            <li>Vermont</li>
+            <li>Virginia</li>
+            <li>Washington</li>
+            <li>West Virginia</li>
+            <li>Wisconsin</li>
+            <li>Wyoming</li>
+        </ul>
+    </div>
+    
+    <!--div that holds center elements-->
+    <div id="center">
+        <!--div that holds text with "United States" elements-->
+        <div>
+            <h1>Map of the United States of America</h1>
+        </div>
+        
+        <!--div that holds map of the united states-->
+        <div onload="initMap()" id="map"> </div>
+        
+        <!--div that holds instruction text-->
+        <div>
+            <p>Above is an interactive map of the United States that displays the contributor information by location. Select a state for more information on their contribution to repositories!</p>
+        </div>
+    </div>
+    
+    <!--div that holds right column elements-->
+    <div id="left">
+        <!--div that holds search bars-->
+        <div id="search">
+            <div id="citySearch">
+                <h3>Search By City:</h3>
+                <input type="text" name="City" id="cityArea" placeholder="City"><br>
+                <button onclick="searchCity()">Search</button>
+                <br>
+            </div>
+        
+            <div id="zipSearch">
+                <h3>Search By Zip Code:</h3>
+                <input type="number" name="zip" min="10000" max="99999" placeholder="Zip    Code">
+                <br>
+                <button onclick="searchZIP()">Search</button><br>
+            </div>
+        </div>
+        
+        <!--div that holds contributor info-->
+        <div id="statistics">
+            <h2>Statistics</h2>
+            <div id="totalCont">
+                <h4>Total number of contributors:</h4>
+                <br>
+            </div>
+
+            <div id="stateCont">
+                <h4>State with most contributors:</h4>
+                <br>
+            </div>
+
+            <div id="cityCont">
+                <h4>City with most contributors:</h4>
+                <br>
+            </div> 
+        </div>
+        
+        <!--div that holds the button-->
+        <div id="clickMe">
+            <h2>Click below for a list of the repos!</h2>
+            <button onclick="window.location.href = 'repoNames.html';">Click Here!</button>
+        </div>
+    </div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATwY-sevzr8wphNjKWVyOQZR7JvXqb2xw&callback=initMap"
+    async defer></script>
+
+</body>
+</html>
