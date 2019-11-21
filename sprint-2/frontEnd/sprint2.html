@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     
     <link rel="stylesheet" href="style.css">
-    
     <script src="pin.js"></script>
+    <script src="stateScripts.js"></script>
+    <script src="searching.js"></script>
     <script>
         var map;
         function initMap() {
@@ -17,11 +18,10 @@
                 disableDefaultUI: true,
                 draggable: false
             });
-            placePin(40, -95, map);
-            placePin(35, -90, map);
-            placePin(45, -100,map);
-            placePin(35, -95, map);
+            placePin(map);
         }   
+        
+                                                                
     </script> 
 </head>
 
@@ -33,7 +33,7 @@
     
     <!--div on the top "Contributors: "-->
     <div id="contributors">
-        <p><span>Contributors:</span><br>John Birkin, Matt Pilgrim, Joseph Vitale, <br>Kaitlyn Zahn</p>
+        <p><span>Contributors:</span><br>John Burkin, Matt Pilgrim, Joseph Vitale, <br>Kaitlyn Zahn</p>
     </div>
     
     <!--line across the screen for formatting-->
@@ -41,60 +41,58 @@
     
     <!--div with scrollable list (form) that lists all of the states-->
     <div id="menu">
-        <ul>
-            <li>Alabama</li>
-            <li>Alaska</li>
-            <li>Arizona</li>
-            <li>Arkansas</li>
-            <li>California</li>
-            <li>Colorado</li>
-            <li>Conneticut</li>
-            <li>Delaware</li>
-            <li>Florida</li>
-            <li>Georgia</li>
-            <li>Hawaii</li>
-            <li>Idaho</li>
-            <li>Illinois</li>
-            <li>Indiana</li>
-            <li>Iowa</li>
-            <li>Kansas</li>
-            <li>Kentucky</li>
-            <li>Louisiana</li>
-            <li>Maine</li>
-            <li>Maryland</li>
-            <li>Massachusetts</li>
-            <li>Michigan</li>
-            <li>Minnesota</li>
-            <li>Mississippi</li>
-            <li>Missouri</li>
-            <li>Montana</li>
-            <li>Nebraska</li>
-            <li>Nevada</li>
-            <li>New Hampshire</li>
-            <li>New Jersey</li>
-            <li>New Mexico</li>
-            <li>New York</li>
-            <li>North Carolina</li>
-            <li>North Dakota</li>
-            <li>Ohio</li>
-            <li>Oklahoma</li>
-            <li>Oregon</li>
-            <li>Pennsylvania</li>
-            <li>Rhode Island</li>
-            <li>South Carolina</li>
-            <li>South Dakota</li>
-            <li>Tennessee</li>
-            <li>Texas</li>
-            <li>Utah</li>
-            <li>Vermont</li>
-            <li>Virginia</li>
-            <li>Washington</li>
-            <li>West Virginia</li>
-            <li>Wisconsin</li>
-            <li>Wyoming</li>
+        <ul id="list">
+            <li onclick="window.map = statePass(this.innerText, map)">Alabama</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Arizona</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Arkansas</li>
+            <li onclick="window.map = statePass(this.innerText, map)">California</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Colorado</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Connecticut</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Delaware</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Florida</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Georgia</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Idaho</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Illinois</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Indiana</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Iowa</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Kansas</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Kentucky</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Louisiana</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Maine</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Maryland</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Massachusetts</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Michigan</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Minnesota</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Mississippi</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Missouri</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Montana</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Nebraska</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Nevada</li>
+            <li onclick="window.map = statePass(this.innerText, map)">New Hampshire</li>
+            <li onclick="window.map = statePass(this.innerText, map)">New Jersey</li>
+            <li onclick="window.map = statePass(this.innerText, map)">New Mexico</li>
+            <li onclick="window.map = statePass(this.innerText, map)">New York</li>
+            <li onclick="window.map = statePass(this.innerText, map)">North Carolina</li>
+            <li onclick="window.map = statePass(this.innerText, map)">North Dakota</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Ohio</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Oklahoma</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Oregon</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Pennsylvania</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Rhode Island</li>
+            <li onclick="window.map = statePass(this.innerText, map)">South Carolina</li>
+            <li onclick="window.map = statePass(this.innerText, map)">South Dakota</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Tennessee</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Texas</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Utah</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Vermont</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Virginia</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Washington</li>
+            <li onclick="window.map = statePass(this.innerText, map)">West Virginia</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Wisconsin</li>
+            <li onclick="window.map = statePass(this.innerText, map)">Wyoming</li>
         </ul>
     </div>
-    
+
     <!--div that holds center elements-->
     <div id="center">
         <!--div that holds text with "United States" elements-->
@@ -124,9 +122,9 @@
         
             <div id="zipSearch">
                 <h3>Search By Zip Code:</h3>
-                <input type="number" name="zip" min="10000" max="99999" placeholder="Zip    Code">
+                <input type="number" id="ZIPArea" name="zip" min="10000" max="99999" placeholder="Zip Code">
                 <br>
-                <button onclick="searchZIP()">Search</button><br>
+                <button onclick="window.map = codeAddress(map)">Search</button><br>
             </div>
         </div>
         
