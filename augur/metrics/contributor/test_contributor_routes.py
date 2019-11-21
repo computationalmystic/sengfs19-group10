@@ -61,3 +61,44 @@ def test_committer_by_group(metrics):
     assert response.status_code == 200
     assert len(data) >= 1
 
+def test_committers_locations_by_group(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/committers-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0
+    
+def test_committers_locations_by_repo(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/repos/21000/committers-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0
+
+def test_issue_locations_by_group(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/issue-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0
+    
+def test_issue_locations_by_repo(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/repos/21000/issue-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0
+    
+def test_pull_request_locations_by_group(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/pull-request-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0
+    
+def test_pull_request_locations_by_repo(metrics):
+    response = requests.get('http://localhost:5000/api/unstable/repo-groups/20/repos/21000/pull-request-locations')
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) >= 1
+    assert data[0]["cntrb_lat"] != 0

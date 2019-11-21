@@ -584,8 +584,8 @@ def committers_locations(self, repo_group_id, repo_id=None, period='day', begin_
 
     if repo_id:
         contributorsSQL = s.sql.text("""
-            select cntrb_lat, cntrb_long
-            from contributors a join (select distinct cmt_author_email from commits where repo_id = :repo_id) b
+            select cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a join (select distinct cmt_author_email from commits where repo_id = :repo_id) b
             on a.cntrb_email = b.cmt_author_email
             """)
 
@@ -594,12 +594,112 @@ def committers_locations(self, repo_group_id, repo_id=None, period='day', begin_
 
     else:
         contributorsSQL = s.sql.text("""
-            select cntrb_lat, cntrb_long
-            from contributors a 
+            select cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a 
                 join (select distinct cmt_author_email 
-                        from augur_data.commits 
+                        from commits 
 			where repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)) b
             	on a.cntrb_email = b.cmt_author_email
+            """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+    return results
+
+@annotate(tag='issue-locations')
+def issue_locations(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
+    """
+    Returns a timeseries of the locations of all the issue of a project.
+
+    DataFrame has these columns:
+    date
+    latitude
+    longitude
+
+    :param repo_id: The repository's id
+    :param repo_group_id: The repository's group id
+    :param period: To set the periodicity to 'day', 'week', 'month' or 'year', defaults to 'day'
+    :param begin_date: Specifies the begin date, defaults to '1970-1-1 00:00:00'
+    :param end_date: Specifies the end date, defaults to datetime.now()
+    :return: DataFrame of persons/period
+    """
+
+    if not begin_date:
+        begin_date = '1970-1-1 00:00:01'
+    if not end_date:
+        end_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if repo_id:
+        contributorsSQL = s.sql.text("""
+           select a.cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a join (select distinct cntrb_id from issues where repo_id = :repo_id) b
+            on a.cntrb_id = b.cntrb_id
+            """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_id': repo_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+
+    else:
+        contributorsSQL = s.sql.text("""
+            select a.cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a 
+                join (select distinct cntrb_id from issues where repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)) b
+            on a.cntrb_id = b.cntrb_id
+            """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+    return results
+
+
+@annotate(tag='pull-request-locations')
+def pull_request_locations(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
+    """
+    Returns a timeseries of the locations of all the pull-request of a project.
+
+    DataFrame has these columns:
+    date
+    latitude
+    longitude
+
+    :param repo_id: The repository's id
+    :param repo_group_id: The repository's group id
+    :param period: To set the periodicity to 'day', 'week', 'month' or 'year', defaults to 'day'
+    :param begin_date: Specifies the begin date, defaults to '1970-1-1 00:00:00'
+    :param end_date: Specifies the end date, defaults to datetime.now()
+    :return: DataFrame of persons/period
+    """
+
+    if not begin_date:
+        begin_date = '1970-1-1 00:00:01'
+    if not end_date:
+        end_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if repo_id:
+        contributorsSQL = s.sql.text("""
+          select distinct a.cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a 
+			join ( select cntrb_id, repo_id 
+				    from (pull_request_meta c 
+				 		join pull_requests d 
+				  		on c.pull_request_id = d.pull_request_id )) b
+            on a.cntrb_id = b.cntrb_id
+			where repo_id = :repo_id
+            """)
+
+        results = pd.read_sql(contributorsSQL, self.database, params={'repo_id': repo_id, 'period': period,
+                                                                'begin_date': begin_date, 'end_date': end_date})
+
+    else:
+        contributorsSQL = s.sql.text("""
+            select distinct a.cntrb_id, cntrb_lat, cntrb_long, cntrb_city, cntrb_state
+            from dummy_contributors a 
+			join ( select cntrb_id, repo_id 
+				    from (pull_request_meta c 
+				 		join pull_requests d 
+				  		on c.pull_request_id = d.pull_request_id )) b
+            on a.cntrb_id = b.cntrb_id
+			where repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
             """)
 
         results = pd.read_sql(contributorsSQL, self.database, params={'repo_group_id': repo_group_id, 'period': period,

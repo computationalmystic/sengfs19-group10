@@ -390,6 +390,117 @@ def create_contributor_routes(server):
     """
     server.addRepoMetric(
         metrics.committers_locations, 'committers-locations')
+    
+    
+    """
+    @api {get} /repo-groups/:repo_group_id/issue_locations Issue Locations (Repo Group)
+    @apiName Issue-Locations(Repo Group)
+    @apiGroup Evolution
+    @apiDescription List of issues and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                    [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoGroupMetric(
+        metrics.issue_locations, 'issue-locations')
+
+    
+    """
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/issue_locations Issue Locations (Repo)
+    @apiName Committers-Issues(Repo)
+    @apiGroup Evolution
+    @apiDescription List of issues and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID.
+    @apiParam {string} repo_id Repository ID.
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                     [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoMetric(
+        metrics.issue_locations, 'issue-locations')
+    
+    
+    
+    """
+    @api {get} /repo-groups/:repo_group_id/pull_request_locations Pull Request Locations (Repo Group)
+    @apiName Pull-Request-Locations(Repo Group)
+    @apiGroup Evolution
+    @apiDescription List of prs and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                    [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoGroupMetric(
+        metrics.pull_request_locations, 'pull-request-locations')
+
+    
+    """
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/pull-request_locations Pull Request Locations (Repo)
+    @apiName Pull-Request-Locations(Repo)
+    @apiGroup Evolution
+    @apiDescription List of prs and their locations.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID.
+    @apiParam {string} repo_id Repository ID.
+    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
+    @apiSuccessExample {json} Success-Response:
+                     [
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        },
+                        {
+                            "cntrb_lat": -3.0
+                            "cntrb_long": 3
+                            "repo_id": 21000
+                        }
+                    ]
+    """
+    server.addRepoMetric(
+        metrics.pull_request_locations, 'pull-request-locations')
 
     server.addRepoGroupMetric(metrics.contributors_code_development, 'contributors-code-development')
 

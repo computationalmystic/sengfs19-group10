@@ -50,4 +50,20 @@ def test_top_committers(metrics):
 def test_committer(metrics):
     assert metrics.committers(21,period='year').iloc[0]['count'] > 100
     assert metrics.committers(20,21000,period='year').iloc[0]['count'] > 100
+    
+def test_committers_locations(metrics):
+     # repo group
+    assert metrics.committers_locations(20).iloc[0]['cntrb_lat'] != 0
+
+    # repo id
+    assert metrics.committers_locations(
+        24, repo_id=21000).iloc[0]['cntrb_lat'] != 0
+
+    # test begin_date and end_date
+    assert metrics.committers_locations(20, begin_date='2019-6-1 00:00:01',
+                                 end_date='2019-06-10 23:59:59').iloc[0]['cntrb_lat'] != 0
+
+    assert metrics.committers_locations(20, repo_id=21000, begin_date='2019-6-1 00:00:01',
+                                 end_date='2019-06-10 23:59:59').iloc[0]['cntrb_lat'] != 0
+    
 
