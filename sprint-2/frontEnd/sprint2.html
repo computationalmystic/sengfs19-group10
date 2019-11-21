@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="pin.js"></script>
     <script src="stateScripts.js"></script>
+    <script src="searching.js"></script>
     <script>
         var map;
         function initMap() {
@@ -91,9 +92,6 @@
             <li onclick="window.map = statePass(this.innerText, map)">Wyoming</li>
         </ul>
     </div>
-    <script>
-        
-    </script>
 
     <!--div that holds center elements-->
     <div id="center">
@@ -124,9 +122,9 @@
         
             <div id="zipSearch">
                 <h3>Search By Zip Code:</h3>
-                <input type="number" name="zip" min="10000" max="99999" placeholder="Zip    Code">
+                <input type="number" id="ZIPArea" name="zip" min="10000" max="99999" placeholder="Zip Code">
                 <br>
-                <button onclick="searchZIP()">Search</button><br>
+                <button onclick="window.map = codeAddress(map)">Search</button><br>
             </div>
         </div>
         
