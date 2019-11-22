@@ -4,7 +4,7 @@
 ## Use Case Necessities
 For the user login use case to lead to a solution, the user interface must properly handle user input and send the data securely to the server for authentication. The server must store the user credentials securely and authenticate the information correctly. The server must then authenticate the request, allowing the user to access the application and use its services.
 
-To fetch data from the API correctly, the webpage must access the API upon the webpage being opened. It must interpret the latitude and longitude of the contributors correctly, determining which locations have the most contributors, and placing pins at the corresponding cities and states. The placed pins must have the appropriate capabilities, allowing the user to click on the pinpoints and access information about the contributions from that location.
+To fetch data from the API correctly, the webpage must access the API upon the webpage being opened. It must be able to call the correct endpoint based on the user input and correctly process the data from the API. The server must be contantly serving these endpoints. The server database must have populated data. 
 
 To display a graph that brings up the cities when you click on the state correctly, the data retrieved must be properly formatted and stored.chart.js. The front-end must properly implement a dynamic graphing function or an existing library such as chart.js. 
 
