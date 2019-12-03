@@ -1,4 +1,4 @@
-# Augur
+# Augur Repo Location Tool (ARLT)
 
 branch | status
    --- | ---
@@ -7,11 +7,13 @@ master | [![Build Status](https://travis-ci.org/chaoss/augur.svg?branch=master)]
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2788/badge)](https://bestpractices.coreinfrastructure.org/projects/2788)
 
-## About Augur
+## About ARLT
 
 Augur is focused on prototyping open source software metrics.
 
 Functionally, Augur is a prototyped implementation of the Linux Foundation's [CHAOSS Project](http://chaoss.community) on [open source software metrics](https://github.com/chaoss/metrics). Technically, Augur is a [Flask web application](http://augur.osshealth.io), [Python library](https://oss-augur.readthedocs.io/en/dev/library-documentation/python.html) and [REST server](http://augur.osshealth.io/static/api_docs/) that presents metrics on open source software development project health and sustainability.
+
+The Augur Repo Location Tool uses Augurs basic functionalities in order to display where different contributors of a repository are located. 
 
 ## Getting Started
 
@@ -20,23 +22,18 @@ Functionally, Augur is a prototyped implementation of the Linux Foundation's [CH
 Note: we currently only support (most) UNIX systems. If you would like to use Augur but only have access to a non-Unix system, we recommend setting up an Ubuntu 18.04 VM if you can. 
 If this is not feasible for you, please reach out to us at [p9j0r6s0m4a0t8v5@augurlabs.slack.com](mailto:p9j0r6s0m4a0t8v5@augurlabs.slack.com) and we will try to help you come up with a solution. In the meantime, if you have Windows and feel so inclined check out issue [#403](https://github.com/chaoss/augur/issues/403) as a starting point until we can finalize a Windows installation.
 
-## Data Collection
+## Installation and Deployment
 
-Please [follow the instructions](https://oss-augur.readthedocs.io/en/master/getting-started/usage.html#db) for collecting data about specific repositories of interest. We are also currently working on putting together an easily distributable sample database to enable people to get going faster.
+1. Clone this repository in your server's public html folder.
+2. Set up and activate your python virtual environment.
+3. Run the following command to install Augur.
+'''
+make install
+'''
+4. During installation, set up the psql database using the provided sample data.
+5. Create a new table in the augur_data schema called 'dummy_contributors' using the data provided in 
+6. 
 
-<!-- TODO: link to worker docs once they're done -->
-<!-- If you are collecting data of your own, you must [start up the workers](./docs/setup/augur-get-workers-going.md). -->
-
-If you have any issues, please feel free to request to email straight into our slack channel [p9j0r6s0m4a0t8v5@augurlabs.slack.com](mailto:p9j0r6s0m4a0t8v5@augurlabs.slack.com) for new developer support!!
-
-## Contributing
-----------------
-
-To contribute to Augur, please follow the guidelines found in our [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md). Augur is a welcoming development community that is open to anyone and everyone of every skill level!
-
-Check out our [documentation](https://oss-augur.readthedocs.io/en/documentation/) for information about our system.
-
-Please note we require all commits to be signed off with a [Developer Certificate of Origin](https://developercertificate.org/) in accordance with the [CHAOSS Project Charter section 8.2.1](https://chaoss.community/about/charter/#user-content-8-intellectual-property-policy). This can be easily done by using the `-s` flag when using `git commit`, e.g. `git commit -s -m "Update README.md"`. **Any pull request containing commits that are not signed off will not be eligible for merge until all commits are signed off.** 
 
 ## License, Copyright, and Funding
 ----------------
