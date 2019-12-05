@@ -66,6 +66,10 @@ var marker;
 
 function placePinByRepo(mapInstance, value){
     var xmlHttp = new XMLHttpRequest();
+    var i = 0;
+    var infowindow = new google.maps.InfoWindow({
+          content: ""
+    });
     xmlHttp.onload = function(){
         if(xmlHttp.status == 200 && xmlHttp.readyState == 4){
                         
@@ -76,21 +80,39 @@ function placePinByRepo(mapInstance, value){
 			locationArray.forEach(function(contributor) {
                 var latitude = contributor.cntrb_lat;
                 var longitude = contributor.cntrb_long;
+                var email = contributor.cntrb_email;
                 
+                email = email.toString();
                 var myLatLng = {lat: latitude, lng: longitude};
                 
                 marker = new google.maps.Marker({
                     position: myLatLng,
                     map: mapInstance,
                     title: "title",
-                    animation: google.maps.Animation.DROP
+                    animation: google.maps.Animation.DROP,
+                    email: email
                 });
                 markersArray.push(marker);
+                
+                google.maps.event.addListener(marker, 'click', function(res){
+                    latitude = res.latLng.lat();
+                    longitude = res.latLng.lng();
+                    for(i = 0; i < markersArray.length; i++){
+                        currentMark = markersArray[i];
+                        currentLat = currentMark.internalPosition.lat();
+                        currentLon = currentMark.internalPosition.lng();
+                        if(latitude == currentLat && longitude == currentLon){
+                            infowindow.setContent(currentMark.email);
+                            infowindow.open(mapInstance, this);
+                        }
+                    }
+                });
 			});
             console.log(markersArray);
+            
         }
     }
-    
+
     var reqURL = "http://129.114.104.67:5000/api/unstable/repo-groups/" + value + "/committers-locations";
     xmlHttp.open("GET", reqURL, true);
     xmlHttp.send();
