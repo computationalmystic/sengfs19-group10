@@ -63,13 +63,9 @@ request2.send()
 var markersArray = [];
 var marker;
 
-
-function placePinByRepo(mapInstance, value){
+function placePinByRepo(mapInstance, value, infowindow){
     var xmlHttp = new XMLHttpRequest();
     var i = 0;
-    var infowindow = new google.maps.InfoWindow({
-          content: ""
-    });
     xmlHttp.onload = function(){
         if(xmlHttp.status == 200 && xmlHttp.readyState == 4){
                         
@@ -81,16 +77,18 @@ function placePinByRepo(mapInstance, value){
                 var latitude = contributor.cntrb_lat;
                 var longitude = contributor.cntrb_long;
                 var email = contributor.cntrb_email;
-                
-                email = email.toString();
+                var city = contributor.cntrb_city;
                 var myLatLng = {lat: latitude, lng: longitude};
                 
+                city = city.toString();
+                email = email.toString();
                 marker = new google.maps.Marker({
                     position: myLatLng,
                     map: mapInstance,
                     title: "title",
                     animation: google.maps.Animation.DROP,
-                    email: email
+                    email: email,
+                    city: city
                 });
                 markersArray.push(marker);
                 
@@ -102,7 +100,8 @@ function placePinByRepo(mapInstance, value){
                         currentLat = currentMark.internalPosition.lat();
                         currentLon = currentMark.internalPosition.lng();
                         if(latitude == currentLat && longitude == currentLon){
-                            infowindow.setContent(currentMark.email);
+                            console.log(currentMark);
+                            infowindow.setContent("Email: " + currentMark.email + "<br/>" + "City: " + currentMark.city);
                             infowindow.open(mapInstance, this);
                         }
                     }

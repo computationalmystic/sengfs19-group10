@@ -13,15 +13,17 @@
     <script>
         var map;
         function initMap() {
-            console.log("We are inside the function.");
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 40, lng: -95},
                 zoom: 4.2,
                 disableDefaultUI: true,
                 draggable: false
             });
-            placePinByRepo(map, 10);
-            placePinByRepo(map, 20);
+            var infowindow = new google.maps.InfoWindow({
+                content: ""
+            });
+            placePinByRepo(map, 10, infowindow);
+            placePinByRepo(map, 20, infowindow);
         }   
     </script> 
 </head>
