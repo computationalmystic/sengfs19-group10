@@ -13,6 +13,7 @@ These instructions are for mac, ubuntu, or other linux based systems.
 
 ***Clone Repository***
 1. Clone this repository into your server's public html folder.
+
 ***Alter API calls***
 2. Inside the repository, navigate to the sprint4 directory
 3. Alter all API calls to a URL of the form 'http://129.114.104.67:5000/api/unstable/..." to reflect your DNS.
@@ -20,6 +21,7 @@ These instructions are for mac, ubuntu, or other linux based systems.
 These API calls can be found in the following files:
   * repoNames.js
   * sprint3.js
+
 ***Install Augur***
 4. Set up and activate your python virtual environment.
 3. Run the following command inside the main repository to install Augur.
