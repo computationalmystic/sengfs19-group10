@@ -28,7 +28,9 @@ make install
 ```
 4. During installation, set up the psql database using the provided sample data.
 5. Create a new table in the augur_data schema called 'dummy_contributors' using the data provided in 'dummy_contributors.xlsx'. 
+
 ***Run Augur***
+
 6. Run Augur with the following command:
 ```
 nohup augur run >augur.log 2>augur.err &
@@ -38,8 +40,14 @@ note: Augur can be killed by running:
 ```
 augur util kill
 ```
+
 ***View Front-end***
+
 7. To view the front-end code, navigate to [your_server/sengfs19-group10/sprint4/login.html
+
+Username is 'User'
+
+Password is 'Pass'
 
 note: This application currently only works for HTTP servers. 
 
