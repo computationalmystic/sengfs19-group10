@@ -45,7 +45,7 @@ augur util kill
 
 ***View Front-end***
 
-7. To view the front-end code, navigate to [your_server/sengfs19-group10/sprint4/login.html
+7. To view the front-end code, navigate to [your_domain]/sengfs19-group10/sprint4/login.html
 
 Username is 'User'
 
